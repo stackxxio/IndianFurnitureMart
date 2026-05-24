@@ -1,10 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Mail, Phone, MapPin, ArrowUpRight, Clock, Sparkles } from 'lucide-react';
+import toast from 'react-hot-toast';
 import api from '../../api';
 
 const Footer = () => {
     const [settings, setSettings] = useState(null);
+    const [email, setEmail] = useState('');
+    const [loading, setLoading] = useState(false);
 
     useEffect(() => {
         api.get('/settings')
@@ -166,22 +169,42 @@ const Footer = () => {
                                 <p className="text-[#F6F1EB]/72 text-xs leading-relaxed font-light">
                                     Subscribe to receive private mart releases, bespoke designs, and seasonal catalogues.
                                 </p>
-                                <form className="flex bg-white/5 border border-white/10 rounded-full p-1.5 focus-within:border-white/30 transition-all duration-300 max-w-sm">
+                                <form onSubmit={async (e) => {
+                                    e.preventDefault();
+                                    if (!email.trim()) {
+                                        toast.error("Please enter your email address");
+                                        return;
+                                    }
+                                    setLoading(true);
+                                    try {
+                                        await api.post('/newsletter', { email });
+                                        toast.success('Thank you for subscribing to the Gazette!');
+                                        setEmail('');
+                                    } catch (err) {
+                                        toast.error(err.response?.data?.message || 'Subscription failed. Please try again.');
+                                    } finally {
+                                        setLoading(false);
+                                    }
+                                }} className="flex bg-white/5 border border-white/10 rounded-full p-1.5 focus-within:border-white/30 transition-all duration-300 max-w-sm">
                                     <input 
                                         type="email" 
                                         placeholder="Your email address" 
-                                        className="px-5 py-3 text-xs outline-none bg-transparent w-full font-light text-[#F6F1EB] placeholder:text-[#F6F1EB]/30" 
+                                        value={email}
+                                        onChange={(e) => setEmail(e.target.value)}
+                                        disabled={loading}
+                                        className="px-5 py-3 text-xs outline-none bg-transparent w-full font-light text-[#F6F1EB] placeholder:text-[#F6F1EB]/30 disabled:opacity-50 [&:-webkit-autofill]:bg-transparent [&:-webkit-autofill]:[-webkit-text-fill-color:#F6F1EB] [&:-webkit-autofill]:[transition:background-color_9999s_ease-in-out_0s]" 
                                         required
                                     />
                                     <button 
                                         type="submit" 
-                                        onClick={(e) => {
-                                            e.preventDefault();
-                                            alert('Thank you for subscribing to the Indian Furniture Mart Gazette!');
-                                        }} 
-                                        className="bg-[#F6F1EB] text-[#330020] px-6 rounded-full text-[10px] font-bold uppercase tracking-widest hover:bg-[#4A012E] hover:text-[#F6F1EB] transition-all duration-300 cursor-pointer shadow-md font-sans"
+                                        disabled={loading}
+                                        className="bg-[#F6F1EB] text-[#330020] px-6 rounded-full text-[10px] font-bold uppercase tracking-widest hover:bg-[#4A012E] hover:text-[#F6F1EB] transition-all duration-300 cursor-pointer shadow-md font-sans disabled:opacity-70 disabled:cursor-not-allowed flex items-center justify-center min-w-[80px]"
                                     >
-                                        Join
+                                        {loading ? (
+                                            <div className="w-4 h-4 border-2 border-current border-t-transparent rounded-full animate-spin" />
+                                        ) : (
+                                            'Join'
+                                        )}
                                     </button>
                                 </form>
                                 <p className="text-[9px] uppercase tracking-[0.2em] text-[#F6F1EB]/30 pl-2">
@@ -197,11 +220,11 @@ const Footer = () => {
 
                 {/* 2. BOTTOM FOOTER BAR */}
                 <div className="pt-10 border-t border-[#F6F1EB]/10 flex flex-col md:flex-row items-center justify-between gap-6">
-                    <div className="flex flex-col sm:flex-row items-center gap-3 sm:gap-6 text-center sm:text-left">
+                    <div className="flex flex-col lg:flex-row items-center gap-3 sm:gap-6 text-center lg:text-left">
                         <p className="text-[9px] font-bold text-[#F6F1EB]/48 uppercase tracking-[0.25em]">{copyright}</p>
-                        <span className="hidden sm:inline text-[#F6F1EB]/20 text-[9px]">•</span>
-                        <p className="text-[9px] font-bold text-[#8A8F68] uppercase tracking-[0.25em] flex items-center gap-1.5 justify-center">
-                            Crafted in India
+                        <span className="hidden lg:inline text-[#F6F1EB]/20 text-[9px]">•</span>
+                        <p className="text-[9px] font-bold text-[#F6F1EB]/40 uppercase tracking-[0.25em] flex items-center gap-1.5 justify-center">
+                            Designed & Developed by <a href="https://stackxxio.com" target="_blank" rel="noopener noreferrer" className="text-[#8A8F68] hover:text-[#F6F1EB] transition-colors duration-300">Stackxxio</a>
                         </p>
                     </div>
                     <div className="flex gap-8 text-[9px] font-bold text-[#F6F1EB]/48 uppercase tracking-widest">

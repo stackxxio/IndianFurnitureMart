@@ -11,7 +11,8 @@ import {
     Info,
     ChevronRight,
     X,
-    LogOut
+    LogOut,
+    Mail
 } from 'lucide-react';
 import { AuthContext } from '../../context/AuthContext';
 import { motion } from 'framer-motion';
@@ -27,6 +28,7 @@ const Sidebar = ({ isOpen, setIsOpen }) => {
         { name: 'Enquiries', path: '/admin/enquiries', icon: MessageCircle },
         { name: 'Gallery', path: '/admin/gallery', icon: GalleryHorizontal },
         { name: 'Users', path: '/admin/users', icon: Users },
+        { name: 'Newsletter', path: '/admin/newsletter', icon: Mail },
         { name: 'About Page', path: '/admin/about', icon: Info },
         { name: 'Site Settings', path: '/admin/settings', icon: Settings },
     ];

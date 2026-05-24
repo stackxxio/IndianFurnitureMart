@@ -32,6 +32,7 @@ const UserDetails = lazy(() => import('./pages/admin/UserDetails'));
 const GalleryManagement = lazy(() => import('./pages/admin/GalleryManagement'));
 const AboutManagement = lazy(() => import('./pages/admin/AboutManagement'));
 const SettingsManagement = lazy(() => import('./pages/admin/SettingsManagement'));
+const NewsletterManagement = lazy(() => import('./pages/admin/NewsletterManagement'));
 
 const LuxuryLoader = () => (
     <div className="min-h-screen flex items-center justify-center bg-[#F6F1EB]">
@@ -116,6 +117,7 @@ const AppRoutes = () => {
             <Route path="/admin/users/:id" element={<ProtectedRoute role="admin"><UserDetails /></ProtectedRoute>} />
             <Route path="/admin/gallery" element={<ProtectedRoute role="admin"><GalleryManagement /></ProtectedRoute>} />
             <Route path="/admin/about" element={<ProtectedRoute role="admin"><AboutManagement /></ProtectedRoute>} />
+            <Route path="/admin/newsletter" element={<ProtectedRoute role="admin"><NewsletterManagement /></ProtectedRoute>} />
             <Route path="/admin/settings" element={<ProtectedRoute role="admin"><SettingsManagement /></ProtectedRoute>} />
             
             {/* 404 Catch-all */}
