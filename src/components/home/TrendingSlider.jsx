@@ -5,14 +5,7 @@ import { MoveRight, Sparkles, ChevronLeft, ChevronRight } from 'lucide-react';
 import SafeImage from '../common/SafeImage';
 import api from '../../api';
 
-// Curated high-end mart/interior/furniture image assets for test database seed fallback
-const CURATED_TRENDING_IMAGES = [
-    "https://images.unsplash.com/photo-1592078615290-033ee584e267?auto=format&fit=crop&q=70&w=600", // Modern lounge chair
-    "https://images.unsplash.com/photo-1555041469-a586c61ea9bc?auto=format&fit=crop&q=70&w=600", // Minimal green sofa
-    "https://images.unsplash.com/photo-1567538096630-e0c55bd6374c?auto=format&fit=crop&q=70&w=600", // Generational ash wood chair
-    "https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?auto=format&fit=crop&q=70&w=600", // Architectural side table
-    "https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?auto=format&fit=crop&q=70&w=600"  // Teak wood credenza
-];
+
 
 const TrendingSlider = () => {
     const [products, setProducts] = useState([]);
@@ -88,32 +81,7 @@ const TrendingSlider = () => {
 
     const visibleProducts = products.slice(0, visibleCount);
 
-    // Determines if the image/name belongs to unrelated test seed data
-    const isTestOrUnrelated = (product, index) => {
-        const imageUrl = (product.images?.[0]?.url || product.image || '').toLowerCase();
-        const name = (product.name || '').toLowerCase();
-        
-        return (
-            imageUrl.includes('flower') || 
-            imageUrl.includes('sunflower') || 
-            imageUrl.includes('car') || 
-            imageUrl.includes('perfume') || 
-            imageUrl.includes('bottle') || 
-            name.includes('addff') || 
-            name.includes('sadscd') || 
-            name.includes('tcfd') || 
-            name.includes('ebce') || 
-            name.includes('sfd') ||
-            name.length < 4
-        );
-    };
 
-    const getProductImage = (product, index) => {
-        if (isTestOrUnrelated(product, index)) {
-            return CURATED_TRENDING_IMAGES[index % CURATED_TRENDING_IMAGES.length];
-        }
-        return product.images?.[0]?.url || product.image;
-    };
 
     const cardVariants = {
         hidden: { opacity: 0, y: 25 },
@@ -217,7 +185,7 @@ const TrendingSlider = () => {
                         {/* Slider Container */}
                         <div 
                             ref={scrollRef}
-                            className="flex gap-4 md:gap-6 overflow-x-auto overflow-y-hidden scroll-smooth touch-pan-x py-6 px-1 relative z-10 select-none scrollbar-none snap-x snap-mandatory" 
+                            className="flex gap-4 md:gap-6 overflow-x-auto overflow-y-hidden scroll-smooth py-6 px-1 relative z-10 select-none scrollbar-none snap-x snap-mandatory" 
                             style={{ 
                                 scrollbarWidth: 'none', 
                                 msOverflowStyle: 'none', 
@@ -252,7 +220,7 @@ const TrendingSlider = () => {
                                                         </span>
 
                                                         <SafeImage 
-                                                            src={getProductImage(product, idx)} 
+                                                            src={product.images?.[0]?.url || product.image} 
                                                             alt={product.name}
                                                             className="w-full h-full object-cover group-hover/item:scale-[1.03] transition-transform duration-500 ease-out"
                                                         />

@@ -457,13 +457,13 @@ const ProductList = () => {
                                         <div className="grid grid-cols-2 gap-2 mt-auto">
                                             <Link 
                                                 to={`/products/${product.slug}`}
-                                                className="w-full py-3.5 rounded-xl border border-black/10 bg-card text-primary text-[9px] font-bold uppercase tracking-[0.2em] flex items-center justify-center hover:bg-surface hover:border-black/20 transition-all text-center"
+                                                className="w-full min-h-[46px] py-3.5 px-2 rounded-xl border border-black/10 bg-card text-primary text-[9px] font-bold uppercase tracking-[0.2em] flex items-center justify-center hover:bg-surface hover:border-black/20 transition-all text-center leading-tight"
                                             >
                                                 View Details
                                             </Link>
                                             <button
                                                 onClick={(e) => { e.preventDefault(); addToCart(product); }}
-                                                className="w-full py-3.5 rounded-xl bg-primary text-white text-[9px] font-bold uppercase tracking-[0.2em] border border-transparent hover:bg-[#4A012E] transition-all shadow-md shadow-black/10 hover:shadow-lg hover:shadow-black/20 text-center cursor-pointer"
+                                                className="w-full min-h-[46px] py-3.5 px-2 rounded-xl bg-primary text-white text-[9px] font-bold uppercase tracking-[0.2em] border border-transparent hover:bg-[#4A012E] transition-all shadow-md shadow-black/10 hover:shadow-lg hover:shadow-black/20 flex items-center justify-center text-center cursor-pointer leading-tight"
                                             >
                                                 Add Enquiry
                                             </button>
